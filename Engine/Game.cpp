@@ -44,6 +44,7 @@ void Game::UpdateModel()
 	const float dt = ft.Mark();
 	ball.Update(dt);
 	ball.IsColliding(walls);
+	//its not working
 }
 
 void Game::ComposeFrame()
