@@ -8,9 +8,9 @@ Rectf::Rectf(float in_left, float in_right, float in_top, float in_bottom)
 	bottom = in_bottom;
 }
 
-Rectf::Rectf(const Vec2 & topLeft, const Vec2 & bottomLeft)
+Rectf::Rectf(const Vec2 & topLeft, const Vec2 & bottomRight)
 {
-	Rectf(topLeft.x, topLeft.y, bottomLeft.x, bottomLeft.y);
+	Rectf(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 }
 
 Rectf::Rectf(const Vec2 & topLeft, float width, float height)
