@@ -13,6 +13,7 @@ Rectf::Rectf(const Vec2 & topLeft, const Vec2 & bottomRight)
 	:
 	Rectf(topLeft.x, bottomRight.x, topLeft.y, bottomRight.y)
 {
+	// it will not work if we intialize it in here
 }
 
 Rectf::Rectf(const Vec2 & topLeft, float width, float height)
