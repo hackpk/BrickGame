@@ -58,13 +58,13 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void Draw(int x0, int y0, int x1, int y1, Color c);
-	void DrawRect(const Rectf& rect,Color c)
-	{
-		Draw(int(rect.left), int(rect.right), int(rect.top), int(rect.bottom),c);
-	}
 	void DrawRect(int x0, int y0, int width, int height, Color c)
 	{
 		Draw(x0, y0, x0 + width, y0 + height, c);
+	}
+	void DrawRect(const Rectf& rect, Color c)
+	{
+		Draw(int(rect.left), int(rect.right), int(rect.top), int(rect.bottom), c);
 	}
 	~Graphics();
 private:

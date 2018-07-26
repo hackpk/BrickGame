@@ -1,10 +1,11 @@
 #include "Ball.h"
 #include "SpriteCodex.h"
 
-Ball::Ball(Vec2 & in_pos, Vec2 & in_vel)
+Ball::Ball(const Vec2 & in_pos,const Vec2 & in_vel)
+	:
+	pos(in_pos),
+	vel(in_vel)
 {
-	pos = in_pos;
-	vel = in_vel;
 }
 
 void Ball::Draw( Graphics & gfx) const
@@ -33,7 +34,7 @@ bool Ball::IsColliding(const Rectf & walls)
 		ReboundX();
 		collided = true;
 	}
-	else if (rect.top < walls.top)
+    if (rect.top < walls.top)
 	{
 		pos.y += walls.top - rect.top;
 		ReboundY();
@@ -59,9 +60,9 @@ void Ball::ReboundY()
 	vel.y = -vel.y;
 }
 
-Rectf Ball::GetRect()
+Rectf Ball::GetRect() const
 {
-	return Rectf::FromCeter(pos,radius,radius);
+	return Rectf::FromCenter(pos,radius,radius);
 }
 
 
