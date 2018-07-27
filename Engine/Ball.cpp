@@ -65,6 +65,11 @@ Rectf Ball::GetRect() const
 	return Rectf::FromCenter(pos,radius,radius);
 }
 
+Vec2 Ball::GetVelocity() const
+{
+	return vel;
+}
+
 
 
 

@@ -13,7 +13,6 @@ Rectf::Rectf(const Vec2 & topLeft, const Vec2 & bottomRight)
 	:
 	Rectf(topLeft.x, bottomRight.x, topLeft.y, bottomRight.y)
 {
-	// it will not work if we intialize it in here
 }
 
 Rectf::Rectf(const Vec2 & topLeft, float width, float height)
@@ -23,10 +22,10 @@ Rectf::Rectf(const Vec2 & topLeft, float width, float height)
 }
 
 
-bool Rectf::IsOverlaping(const Rectf & other)
+bool Rectf::IsOverlappingWith(const Rectf & other) const
 {
-	return other.left <= right  && other.right>=left &&
-		other.bottom >= top  &&other.top <= bottom;
+	return right > other.left && left < other.right
+		&& bottom > other.top && top < other.bottom;
 }
 
 Rectf Rectf::FromCenter(const Vec2 & center, float halfWidth, float halfHeight)
