@@ -64,7 +64,7 @@ public:
 	}
 	void DrawRect(const Rectf& rect, Color c)
 	{
-		Draw(int(rect.left), int(rect.right), int(rect.top), int(rect.bottom), c);
+		Draw(int(rect.left), int(rect.top), int(rect.right), int(rect.bottom), c);
 	}
 	~Graphics();
 private:
