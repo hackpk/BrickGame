@@ -16,6 +16,8 @@ public:
 	void Update(const Keyboard& kbd, float dt);
 	Rectf GetRect()const;
 private:
+	static constexpr float widthExtra = 10.0f;
+	static constexpr Color colorExtra = Colors::Blue;
 	Color c = Colors::White;
 	float speed = 200.0f;
 	float halfWidth;
