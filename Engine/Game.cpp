@@ -27,9 +27,21 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	ball(Vec2(300.0f,300.0f),Vec2(300.0f,300.0f)),
 	walls(0.0f,float(gfx.ScreenWidth),0.0f,float(gfx.ScreenHeight)),
-	bri(Rectf(450.0f, 550.0, 485.0f, 515.0f),Colors::Red),
 	pad(Vec2(400.0f,500.0f),50.0f,13.0f)
 {
+	const Color colors[5] = { Colors::Red,Colors::Blue,Colors::Gray,Colors::Yellow,Colors::Green };
+
+	Vec2 topLeft = { 0.0f,0.0f };
+	int i = 0;
+	for (int y = 0; y < nBricksDown; y++)
+	{
+		const Color c = colors[y];
+		for (int x = 0; x < nBricksAcross; x++)
+		{
+			brick[i] = Brick(Rectf(topLeft+Vec2(float(x*brickWidth),float(y*brickHeight)),brickWidth,brickHeight),c);
+			i++;
+		}
+	}
 }
 
 void Game::Go()
@@ -48,11 +60,13 @@ void Game::UpdateModel()
 	pad.Update(wnd.kbd,dt);
 	pad.DoWallCollision(walls);
 
-	if (bri.DoBallCollision(ball))
+	for (Brick& b : brick)
 	{
+		if (b.DoBallCollision(ball))
+		{
 
+		}
 	}
-
 	if (pad.DoBallCollision(ball))
 	{
 
@@ -66,7 +80,11 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	ball.Draw(gfx);
-	bri.DrawBrick(gfx);
+	for (const Brick& b : brick)
+	{
+		b.DrawBrick(gfx);
+	}
+
 	pad.DrawPaddle(gfx);
 }
 
