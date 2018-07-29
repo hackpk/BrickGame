@@ -31,7 +31,7 @@ Game::Game( MainWindow& wnd )
 {
 	const Color colors[5] = { Colors::Red,Colors::Blue,Colors::Gray,Colors::Yellow,Colors::Green };
 
-	Vec2 topLeft = { 0.0f,0.0f };
+	Vec2 topLeft = { 30.0f,30.0f };
 	int i = 0;
 	for (int y = 0; y < nBricksDown; y++)
 	{
@@ -60,12 +60,35 @@ void Game::UpdateModel()
 	pad.Update(wnd.kbd,dt);
 	pad.DoWallCollision(walls);
 
-	for (Brick& b : brick)
-	{
-		if (b.DoBallCollision(ball))
-		{
+	bool isCollisionHappend = false;
+	float currBrickDistSq;
+	int currentBrickIndex;
 
+	for (int i = 0; i < nBricks; i++)
+	{
+		if (brick[i].CheckBallCollision(ball))
+		{
+			const float newBrickDistSq = (ball.GetPos() - brick[i + 1].GetCenter()).GetLengthSq();
+			if (isCollisionHappend)
+			{
+				if (newBrickDistSq < currBrickDistSq)
+				{
+					currBrickDistSq = newBrickDistSq;
+					currentBrickIndex = i;
+				}
+			}
+			else
+			{
+				currBrickDistSq = newBrickDistSq;
+				currentBrickIndex = i;
+				isCollisionHappend = true;
+			}
 		}
+		
+	}
+	if (isCollisionHappend)
+	{
+		brick[currentBrickIndex].ExecuteBallCollision(ball);
 	}
 	if (pad.DoBallCollision(ball))
 	{
