@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball(Vec2(300.0f,300.0f),Vec2(300.0f,300.0f)),
+	ball(Vec2(300.0f,300.0f),Vec2(-300.0f,-300.0f)),
 	walls(0.0f,float(gfx.ScreenWidth),0.0f,float(gfx.ScreenHeight)),
 	pad(Vec2(400.0f,500.0f),50.0f,13.0f)
 {
@@ -47,14 +47,19 @@ Game::Game( MainWindow& wnd )
 void Game::Go()
 {
 	gfx.BeginFrame();
-	UpdateModel();
+    float elapsedTime = ft.Mark();
+	if (elapsedTime > 0.0f)
+	{
+	    const float dt = std::min(0.025f, elapsedTime);
+		UpdateModel(dt);
+		elapsedTime -= dt;
+	}
 	ComposeFrame();
 	gfx.EndFrame();
 }
 
-void Game::UpdateModel()
+void Game::UpdateModel(float dt)
 {
-	const float dt = ft.Mark();
 	ball.Update(dt);
 
 	pad.Update(wnd.kbd,dt);
@@ -68,7 +73,7 @@ void Game::UpdateModel()
 	{
 		if (brick[i].CheckBallCollision(ball))
 		{
-			const float newBrickDistSq = (ball.GetPos() - brick[i + 1].GetCenter()).GetLengthSq();
+			const float newBrickDistSq = (ball.GetPos() - brick[i].GetCenter()).GetLengthSq();
 			if (isCollisionHappend)
 			{
 				if (newBrickDistSq < currBrickDistSq)
@@ -88,7 +93,9 @@ void Game::UpdateModel()
 	}
 	if (isCollisionHappend)
 	{
+		pad.ResetCoolDown();
 		brick[currentBrickIndex].ExecuteBallCollision(ball);
+
 	}
 	if (pad.DoBallCollision(ball))
 	{
@@ -97,7 +104,7 @@ void Game::UpdateModel()
 
 	if (ball.IsColliding(walls))
 	{
-
+		pad.ResetCoolDown();
 	}
 }
 void Game::ComposeFrame()
