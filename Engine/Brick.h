@@ -16,7 +16,7 @@ public :
 	void ExecuteBallCollision(Ball& ball);
 	Vec2 GetCenter();
 private:
-	static constexpr float padding = 0.6f;
+	static constexpr float padding = 1.0f;
 	Rectf rect;
 	Color color;
 	bool destroyed = false;
